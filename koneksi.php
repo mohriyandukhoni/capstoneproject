@@ -7,10 +7,10 @@ $database = 'railway';
 $port = '15149';
 
 // Buat koneksi
-$conn = mysqli_connect($host, $username, $password, $database, $port);
+$koneksi = mysqli_connect($host, $username, $password, $database, $port);
 
 // Periksa koneksi
-if (!$conn) {
+if (!$koneksi) {
     die("Koneksi gagal: " . mysqli_connect_error());
 }
 ?>
