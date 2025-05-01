@@ -35,7 +35,7 @@ if(isset($_POST['tambah'])){
 
 // Edit Transaksi
 if(isset($_POST['edit'])){
-    $id = $_POST['id'];
+    $id = $_POST['transaksi_id'];
     $tanggal = $_POST['tanggal'];
     $kategori = $_POST['kategori_id'];
     $rekening = $_POST['rekening_id'];
