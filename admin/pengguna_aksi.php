@@ -82,10 +82,28 @@ if(isset($_POST['edit'])){
 
 // Hapus pengguna
 if(isset($_GET['hapus'])){
+    // Prevent any output before headers
+    if (headers_sent()) {
+        die("Redirect failed. Please click <a href='pengguna.php'>here</a> to continue.");
+    }
+
     $id = mysqli_real_escape_string($koneksi, $_GET['hapus']);
     
+    // Make sure we have a valid ID
+    if (!$id || !is_numeric($id)) {
+        header("location:pengguna.php?alert=invalid_id");
+        exit();
+    }
+
+    // Check if user exists
+    $check = mysqli_query($koneksi, "SELECT user_id FROM user WHERE user_id='$id'");
+    if (mysqli_num_rows($check) == 0) {
+        header("location:pengguna.php?alert=user_not_found");
+        exit();
+    }
+    
     // Cek apakah user yang akan dihapus adalah user yang sedang login
-    if($id == $_SESSION['user_id']){
+    if(isset($_SESSION['user_id']) && $id == $_SESSION['user_id']){
         header("location:pengguna.php?alert=cant_delete_self");
         exit();
     }
@@ -97,5 +115,6 @@ if(isset($_GET['hapus'])){
     }else{
         header("location:pengguna.php?alert=gagal");
     }
+    exit();
 }
 ?> 

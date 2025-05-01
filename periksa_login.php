@@ -26,6 +26,7 @@ if($data && password_verify($password, $data['user_password'])) {
 	$_SESSION['username'] = $username;
 	$_SESSION['nama'] = $data['user_nama'];
 	$_SESSION['level'] = $data['user_level'];
+	$_SESSION['user_id'] = $data['user_id'];
 
 	if($data['user_level'] == "administrator"){
 		$_SESSION['status'] = "administrator_logedin";
