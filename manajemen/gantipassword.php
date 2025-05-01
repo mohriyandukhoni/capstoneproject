@@ -76,7 +76,7 @@ include '../koneksi.php';
                         <input type="password" class="form-control" name="konfirmasi_password" required>
                                     </div>
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Ganti Password</button>
+                        <button type="submit" name="ganti" class="btn btn-primary">Ganti Password</button>
                     </div>
                 </form>
             </div>
