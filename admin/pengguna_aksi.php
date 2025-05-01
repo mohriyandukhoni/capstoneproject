@@ -12,6 +12,12 @@ if(isset($_POST['tambah'])){
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password
     $level = mysqli_real_escape_string($koneksi, $_POST['level']);
 
+    // Validasi level
+    if($level != 'administrator' && $level != 'manajemen') {
+        header("location:pengguna.php?alert=invalid_level");
+        exit();
+    }
+
     // Cek username sudah ada atau belum
     $cek = mysqli_query($koneksi, "SELECT * FROM user WHERE user_username='$username'");
     if(mysqli_num_rows($cek) > 0){
@@ -36,6 +42,12 @@ if(isset($_POST['edit'])){
     $username = mysqli_real_escape_string($koneksi, $_POST['username']);
     $level = mysqli_real_escape_string($koneksi, $_POST['level']);
     
+    // Validasi level
+    if($level != 'administrator' && $level != 'manajemen') {
+        header("location:pengguna.php?alert=invalid_level");
+        exit();
+    }
+
     // Cek username sudah ada atau belum (kecuali username sendiri)
     $cek = mysqli_query($koneksi, "SELECT * FROM user WHERE user_username='$username' AND user_id != '$id'");
     if(mysqli_num_rows($cek) > 0){

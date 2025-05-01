@@ -160,7 +160,7 @@ include '../koneksi.php';
                                     <label class="form-label">Level</label>
                                     <select name="level" class="form-control" required>
                                         <option value="administrator">Administrator</option>
-                                        <option value="user">User</option>
+                                        <option value="manajemen">Manajemen</option>
                                     </select>
                                 </div>
                             </div>
