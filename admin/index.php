@@ -1,7 +1,8 @@
 <?php
 session_start();
-if($_SESSION['status'] != "administrator_logedin"){
+if(!isset($_SESSION['status']) || $_SESSION['status'] != "administrator_logedin"){
     header("location:../index.php?alert=belum_login");
+    exit();
 }
 include '../koneksi.php';
 
@@ -20,7 +21,7 @@ include '../template/header.php';
                     <div>
                         <h6 class="text-muted mb-2">Total Pemasukan</h6>
                         <?php 
-                        $pemasukan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT SUM(jumlah) as total FROM transaksi WHERE jenis='pemasukan'"));
+                        $pemasukan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COALESCE(SUM(jumlah), 0) as total FROM transaksi WHERE jenis='pemasukan'"));
                         ?>
                         <h4 class="mb-0">Rp. <?= number_format($pemasukan['total']) ?></h4>
                     </div>
@@ -38,7 +39,7 @@ include '../template/header.php';
                     <div>
                         <h6 class="text-muted mb-2">Total Pengeluaran</h6>
                         <?php 
-                        $pengeluaran = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT SUM(jumlah) as total FROM transaksi WHERE jenis='pengeluaran'"));
+                        $pengeluaran = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COALESCE(SUM(jumlah), 0) as total FROM transaksi WHERE jenis='pengeluaran'"));
                         ?>
                         <h4 class="mb-0">Rp. <?= number_format($pengeluaran['total']) ?></h4>
                     </div>
@@ -56,7 +57,7 @@ include '../template/header.php';
                     <div>
                         <h6 class="text-muted mb-2">Total Hutang</h6>
                         <?php 
-                        $hutang = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT SUM(hutang_nominal) as total FROM hutang WHERE hutang_status='0'"));
+                        $hutang = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COALESCE(SUM(jumlah), 0) as total FROM hutang WHERE status='0'"));
                         ?>
                         <h4 class="mb-0">Rp. <?= number_format($hutang['total']) ?></h4>
                     </div>
@@ -74,7 +75,7 @@ include '../template/header.php';
                     <div>
                         <h6 class="text-muted mb-2">Total Piutang</h6>
                         <?php 
-                        $piutang = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT SUM(piutang_nominal) as total FROM piutang WHERE piutang_status='0'"));
+                        $piutang = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COALESCE(SUM(jumlah), 0) as total FROM piutang WHERE status='0'"));
                         ?>
                         <h4 class="mb-0">Rp. <?= number_format($piutang['total']) ?></h4>
                     </div>
@@ -143,13 +144,13 @@ include '../template/header.php';
                         </thead>
                         <tbody>
                             <?php 
-                            $query = mysqli_query($koneksi, "SELECT * FROM hutang WHERE hutang_status='0' AND hutang_jatuh_tempo <= CURDATE() ORDER BY hutang_jatuh_tempo ASC LIMIT 5");
+                            $query = mysqli_query($koneksi, "SELECT * FROM hutang WHERE status='0' AND tanggal_jatuh_tempo <= CURDATE() ORDER BY tanggal_jatuh_tempo ASC LIMIT 5");
                             while($data = mysqli_fetch_assoc($query)):
                             ?>
                             <tr>
-                                <td><?= date('d/m/Y', strtotime($data['hutang_jatuh_tempo'])) ?></td>
-                                <td><?= htmlspecialchars($data['hutang_keterangan']) ?></td>
-                                <td>Rp. <?= number_format($data['hutang_nominal']) ?></td>
+                                <td><?= date('d/m/Y', strtotime($data['tanggal_jatuh_tempo'])) ?></td>
+                                <td><?= htmlspecialchars($data['keterangan']) ?></td>
+                                <td>Rp. <?= number_format($data['jumlah']) ?></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>
