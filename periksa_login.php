@@ -3,7 +3,7 @@ session_start();
 include 'koneksi.php';
 
 $username = mysqli_real_escape_string($koneksi, $_POST['username']);
-$password = mysqli_real_escape_string($koneksi, $_POST['password']);
+$password = $_POST['password']; // Don't escape password before hashing
 
 // DEBUG: tampilkan input dan query (bisa dihapus jika tidak perlu)
 // echo "<pre>";
@@ -11,19 +11,18 @@ $password = mysqli_real_escape_string($koneksi, $_POST['password']);
 // echo "Password: $password\n";
 // $sql = "SELECT * FROM user WHERE user_username='$username' AND user_password='$password'";
 // echo "SQL: $sql\n";
-$sql = "SELECT * FROM user WHERE user_username='$username' AND user_password='$password'";
+$sql = "SELECT * FROM user WHERE user_username='$username'";
 $query = mysqli_query($koneksi, $sql);
 // if (!$query) {
 //     echo "Query error: ".mysqli_error($koneksi)."\n";
 // }
-$num_rows = mysqli_num_rows($query);
-// echo "Rows found: $num_rows\n";
 $data = mysqli_fetch_assoc($query);
 // echo "Data: ";
 // print_r($data);
 // echo "</pre>";
 
-if($num_rows > 0){
+// Verify if user exists and password matches
+if($data && password_verify($password, $data['user_password'])) {
 	$_SESSION['username'] = $username;
 	$_SESSION['nama'] = $data['user_nama'];
 	$_SESSION['level'] = $data['user_level'];
