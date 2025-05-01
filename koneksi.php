@@ -1,10 +1,10 @@
 <?php
 // Mengambil konfigurasi dari variabel lingkungan Railway
-$host = getenv('MYSQLHOST');
-$username = getenv('MYSQLUSER');
-$password = getenv('MYSQLPASSWORD');
-$database = getenv('MYSQLDATABASE');
-$port = getenv('MYSQLPORT') ?: '3306';
+$host = 'trolley.proxy.rlwy.net';  // Using public MySQL URL
+$username = 'root';
+$password = 'TLCvoPIjxDIkKjJcgdaMDyNKyqPakrkD';
+$database = 'railway';
+$port = '15149';
 
 // Buat koneksi
 $conn = mysqli_connect($host, $username, $password, $database, $port);
