@@ -15,12 +15,17 @@ if(isset($_POST['ganti'])){
     $konfirmasi_password = $_POST['konfirmasi_password'];
 
     // Cek password lama
-    $query = mysqli_query($koneksi, "SELECT * FROM user WHERE username='$username' AND password='$password_lama'");
+    $query = mysqli_query($koneksi, "SELECT * FROM user WHERE user_username='$username'");
     $data = mysqli_fetch_assoc($query);
 
-    if(mysqli_num_rows($query) > 0){
+    // Verifikasi password lama
+    if($data && password_verify($password_lama, $data['user_password'])){
         if($password_baru == $konfirmasi_password){
-            $query = mysqli_query($koneksi, "UPDATE user SET password='$password_baru' WHERE username='$username'");
+            // Hash password baru
+            $password_hash = password_hash($password_baru, PASSWORD_DEFAULT);
+            
+            // Update password
+            $query = mysqli_query($koneksi, "UPDATE user SET user_password='$password_hash' WHERE user_username='$username'");
             
             if($query){
                 header("location:gantipassword.php?alert=berhasil");
@@ -28,10 +33,10 @@ if(isset($_POST['ganti'])){
                 header("location:gantipassword.php?alert=gagal");
             }
         }else{
-            header("location:gantipassword.php?alert=gagal");
+            header("location:gantipassword.php?alert=tidakcocok");
         }
     }else{
-        header("location:gantipassword.php?alert=gagal");
+        header("location:gantipassword.php?alert=passwordsalah");
     }
 }
 ?> 
