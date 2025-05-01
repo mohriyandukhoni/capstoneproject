@@ -20,7 +20,7 @@ include '../template/header.php';
                     <div>
                         <h6 class="text-muted mb-2">Total Pemasukan</h6>
                         <?php 
-                        $pemasukan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT SUM(transaksi_nominal) as total FROM transaksi WHERE transaksi_jenis='Pemasukan'"));
+                        $pemasukan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT SUM(jumlah) as total FROM transaksi WHERE jenis='pemasukan'"));
                         ?>
                         <h4 class="mb-0">Rp. <?= number_format($pemasukan['total']) ?></h4>
                     </div>
@@ -38,7 +38,7 @@ include '../template/header.php';
                     <div>
                         <h6 class="text-muted mb-2">Total Pengeluaran</h6>
                         <?php 
-                        $pengeluaran = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT SUM(transaksi_nominal) as total FROM transaksi WHERE transaksi_jenis='Pengeluaran'"));
+                        $pengeluaran = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT SUM(jumlah) as total FROM transaksi WHERE jenis='pengeluaran'"));
                         ?>
                         <h4 class="mb-0">Rp. <?= number_format($pengeluaran['total']) ?></h4>
                     </div>
@@ -106,18 +106,18 @@ include '../template/header.php';
                         </thead>
                         <tbody>
                             <?php 
-                            $query = mysqli_query($koneksi, "SELECT * FROM transaksi,kategori WHERE kategori_id=transaksi_kategori ORDER BY transaksi_id DESC LIMIT 5");
+                            $query = mysqli_query($koneksi, "SELECT * FROM transaksi,kategori WHERE kategori.id=transaksi.kategori_id ORDER BY transaksi.id DESC LIMIT 5");
                             while($data = mysqli_fetch_assoc($query)):
                             ?>
                             <tr>
-                                <td><?= date('d/m/Y', strtotime($data['transaksi_tanggal'])) ?></td>
-                                <td><?= htmlspecialchars($data['kategori_nama']) ?></td>
+                                <td><?= date('d/m/Y', strtotime($data['tanggal'])) ?></td>
+                                <td><?= htmlspecialchars($data['nama']) ?></td>
                                 <td>
-                                    <span class="badge bg-<?= $data['transaksi_jenis']=='Pemasukan'?'success':'danger' ?>">
-                                        <?= $data['transaksi_jenis'] ?>
+                                    <span class="badge bg-<?= $data['jenis']=='pemasukan'?'success':'danger' ?>">
+                                        <?= ucfirst($data['jenis']) ?>
                                     </span>
                                 </td>
-                                <td>Rp. <?= number_format($data['transaksi_nominal']) ?></td>
+                                <td>Rp. <?= number_format($data['jumlah']) ?></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>
