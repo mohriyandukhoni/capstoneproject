@@ -14,7 +14,7 @@ if(isset($_POST['tambah'])){
     $nama = $_POST['nama'];
     $jumlah = $_POST['jumlah'];
     $keterangan = $_POST['keterangan'];
-    $status = $_POST['status'];
+    $status = ($_POST['status'] == 'lunas') ? 'lunas' : 'belum_lunas';
 
     $query = mysqli_query($koneksi, "INSERT INTO piutang (tanggal, nama, jumlah, keterangan, status) 
                                     VALUES ('$tanggal', '$nama', '$jumlah', '$keterangan', '$status')");
@@ -33,7 +33,7 @@ if(isset($_POST['edit'])){
     $nama = $_POST['nama'];
     $jumlah = $_POST['jumlah'];
     $keterangan = $_POST['keterangan'];
-    $status = $_POST['status'];
+    $status = ($_POST['status'] == 'lunas') ? 'lunas' : 'belum_lunas';
 
     $query = mysqli_query($koneksi, "UPDATE piutang SET 
                                     tanggal = '$tanggal',

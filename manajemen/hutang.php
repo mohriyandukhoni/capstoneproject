@@ -127,7 +127,7 @@ include '../koneksi.php';
                                             <div class="mb-3">
                                                 <label class="form-label">Status</label>
                                                 <select name="status" class="form-control" required>
-                                                    <option value="belum" <?= $data['status']=='belum'?'selected':'' ?>>Belum</option>
+                                                    <option value="belum_lunas" <?= $data['status']=='belum_lunas'?'selected':'' ?>>Belum Lunas</option>
                                                     <option value="lunas" <?= $data['status']=='lunas'?'selected':'' ?>>Lunas</option>
                                                 </select>
                                             </div>
@@ -173,10 +173,10 @@ include '../koneksi.php';
                                 <div class="mb-3">
                                     <label class="form-label">Status</label>
                                     <select name="status" class="form-control" required>
-                                        <option value="belum">Belum</option>
-                                <option value="lunas">Lunas</option>
-                            </select>
-                        </div>
+                                        <option value="belum_lunas">Belum Lunas</option>
+                                        <option value="lunas">Lunas</option>
+                                    </select>
+                                </div>
                     </div>
                     <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
