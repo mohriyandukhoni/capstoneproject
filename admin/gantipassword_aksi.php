@@ -12,12 +12,13 @@ if(isset($_POST['ganti'])){
     $konfirmasi_password = $_POST['konfirmasi_password'];
 
     // Cek password lama
-    $query = mysqli_query($koneksi, "SELECT * FROM user WHERE username='$username' AND password='$password_lama'");
+    $query = mysqli_query($koneksi, "SELECT * FROM user WHERE user_username='$username'");
     $data = mysqli_fetch_assoc($query);
 
-    if(mysqli_num_rows($query) > 0){
+    if(password_verify($password_lama, $data['user_password'])){
         if($password_baru == $konfirmasi_password){
-            $query = mysqli_query($koneksi, "UPDATE user SET password='$password_baru' WHERE username='$username'");
+            $hashed_password = password_hash($password_baru, PASSWORD_DEFAULT);
+            $query = mysqli_query($koneksi, "UPDATE user SET user_password='$hashed_password' WHERE user_username='$username'");
             
             if($query){
                 header("location:gantipassword.php?alert=berhasil");
