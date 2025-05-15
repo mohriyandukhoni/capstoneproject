@@ -32,6 +32,8 @@
             width: var(--sidebar-width);
             transition: all 0.3s ease;
             z-index: 1000;
+            left: 0;
+            top: 0;
         }
         
         .sidebar.collapsed {
@@ -46,6 +48,8 @@
             transition: all 0.3s;
             white-space: nowrap;
             overflow: hidden;
+            display: flex;
+            align-items: center;
         }
         
         .sidebar .nav-link:hover {
@@ -62,6 +66,7 @@
             width: 20px;
             text-align: center;
             margin-right: 10px;
+            font-size: 1.1em;
         }
         
         .sidebar.collapsed .nav-link span {
@@ -76,6 +81,7 @@
             margin-left: var(--sidebar-width);
             padding: 20px;
             transition: all 0.3s ease;
+            min-height: 100vh;
         }
         
         .main-content.expanded {
@@ -137,6 +143,15 @@
         
         .sidebar-toggle:hover {
             background: #f8f9fa;
+            transform: scale(1.05);
+        }
+        
+        .sidebar-toggle i {
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-toggle.active i {
+            transform: rotate(180deg);
         }
         
         @media (max-width: 768px) {
@@ -163,7 +178,7 @@
         
         @media (min-width: 769px) {
             .sidebar-toggle {
-                display: none;
+                display: flex;
             }
         }
     </style>

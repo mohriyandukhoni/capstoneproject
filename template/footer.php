@@ -27,6 +27,7 @@
                     mainContent.classList.remove('expanded');
                     sidebar.classList.remove('active');
                     mainContent.classList.remove('active');
+                    sidebarToggle.classList.remove('active');
                 }
             }
 
@@ -39,11 +40,13 @@
                     // Mobile view: toggle full sidebar
                     sidebar.classList.toggle('active');
                     mainContent.classList.toggle('active');
+                    sidebarToggle.classList.toggle('active');
                 } else {
                     // Desktop view: toggle collapsed state
                     isSidebarCollapsed = !isSidebarCollapsed;
                     sidebar.classList.toggle('collapsed');
                     mainContent.classList.toggle('expanded');
+                    sidebarToggle.classList.toggle('active');
                 }
             });
 
