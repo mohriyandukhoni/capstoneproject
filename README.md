@@ -59,4 +59,3 @@ $database = "keuangan";
 - Validasi input
 - Pencegahan SQL injection
 - CSRF protection
-Sat Jun 28 15:18:55 UTC 2025
