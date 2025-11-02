@@ -60,4 +60,3 @@ $database = "keuangan";
 - Pencegahan SQL injection
 - CSRF protection
 Thu Jul 31 18:32:21 UTC 2025
-Sun Nov  2 15:17:20 UTC 2025
